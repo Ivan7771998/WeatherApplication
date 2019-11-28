@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,8 +25,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView textHumidity;
     private ImageView coatOfArms;
     private Spinner selectCity;
+    private CheckBox mCheckBoxOvercast;
+    private CheckBox mCheckBoxHumidity;
     private List<CityModelWeather> mCityModelWeathers;
     private final String TAG = "States";
+    private final String CHECKBOX_HUMIDITY = "humidity";
+    private final String CHECKBOX_OVERCAST = "overcast";
     private WeatherPresenter weatherPresenter;
 
     @Override
@@ -33,24 +39,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initComponent();
         itemSpinnerSelected();
+        itemCheckBoxStatus();
     }
 
     private void initComponent() {
-        weatherPresenter=new WeatherPresenter(this);
+        weatherPresenter = new WeatherPresenter(this);
         weatherPresenter.initArrays();
         weatherPresenter.fillingOutList();
-        mCityModelWeathers=weatherPresenter.getCityModelWeathers();
+        mCityModelWeathers = weatherPresenter.getCityModelWeathers();
         nameCity = findViewById(R.id.name_city);
         currentTemperature = findViewById(R.id.temperature);
         coatOfArms = findViewById(R.id.coat_of_arms);
         selectCity = findViewById(R.id.spinner);
-        textHumidity=findViewById(R.id.text_humidity);
-        textOvercast=findViewById(R.id.text_overcast);
+        textHumidity = findViewById(R.id.text_humidity);
+        textOvercast = findViewById(R.id.text_overcast);
+        mCheckBoxHumidity = findViewById(R.id.checkBox_humidity);
+        mCheckBoxOvercast = findViewById(R.id.checkBox_overcast);
     }
 
 
-
-    private void itemSpinnerSelected(){
+    private void itemSpinnerSelected() {
         selectCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -60,9 +68,33 @@ public class MainActivity extends AppCompatActivity {
                 textOvercast.setText(mCityModelWeathers.get(i).overcast);
                 textHumidity.setText(mCityModelWeathers.get(i).humidity);
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+    }
 
+    private void itemCheckBoxStatus() {
+        mCheckBoxOvercast.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    textOvercast.setVisibility(View.VISIBLE);
+                } else {
+                    textOvercast.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        mCheckBoxHumidity.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    textHumidity.setVisibility(View.VISIBLE);
+                } else {
+                    textHumidity.setVisibility(View.INVISIBLE);
+                }
             }
         });
     }
@@ -87,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        super.onStop();
         weatherPresenter.destroyObjects();
+        super.onStop();
         Log.d(TAG, "MainActivity: onStop()");
     }
 
@@ -104,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "MainActivity: onRestart()");
     }
 
-    @Override
     public void onBackPressed() {
         super.onBackPressed();
         Log.d(TAG, "MainActivity: onBackPressed()");
@@ -112,12 +143,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(CHECKBOX_HUMIDITY, mCheckBoxHumidity.isChecked());
+        outState.putBoolean(CHECKBOX_OVERCAST, mCheckBoxOvercast.isChecked());
         super.onSaveInstanceState(outState);
         Log.d(TAG, "MainActivity: onSaveInstanceState()");
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        mCheckBoxOvercast.setChecked(savedInstanceState.getBoolean(CHECKBOX_OVERCAST));
+        mCheckBoxHumidity.setChecked(savedInstanceState.getBoolean(CHECKBOX_HUMIDITY));
         super.onRestoreInstanceState(savedInstanceState);
         Log.d(TAG, "MainActivity: onRestoreInstanceState()");
     }

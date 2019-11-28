@@ -11,11 +11,11 @@ class CityModelWeather {
     Drawable res_image;
 
     CityModelWeather(String name_city, String temperature, Drawable res_image,
-                     String overcast,String humidity) {
+                     String overcast, String humidity) {
         this.name_city = name_city;
-        this.temperature = temperature+ " \u00B0C";
+        this.temperature = temperature + " \u00B0C";
         this.res_image = res_image;
-        this.overcast=overcast;
-        this.humidity=humidity;
+        this.overcast = overcast;
+        this.humidity = humidity;
     }
 }

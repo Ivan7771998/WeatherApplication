@@ -47,10 +47,10 @@ class WeatherPresenter implements IWeatherPresenter {
     public void destroyObjects() {
         mCityModelWeathers.clear();
         nameCityList = null;
-        temperatureCityList=null;
-        textOvercastList=null;
-        textHumidityList=null;
-        idImageList=null;
+        temperatureCityList = null;
+        textOvercastList = null;
+        textHumidityList = null;
+        idImageList = null;
     }
 }
 
