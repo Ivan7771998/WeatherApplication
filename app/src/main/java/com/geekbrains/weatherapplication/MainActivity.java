@@ -1,9 +1,11 @@
 package com.geekbrains.weatherapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -15,56 +17,108 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView name_city;
-    private TextView current_temperature;
-    private ImageView coat_of_arms;
-    private Spinner select_city;
-    private String [] name_city_list;
-    private String [] temperature_city_list;
-    private TypedArray id_image_list;
+    private TextView nameCity;
+    private TextView currentTemperature;
+    private TextView textOvercast;
+    private TextView textHumidity;
+    private ImageView coatOfArms;
+    private Spinner selectCity;
     private List<CityModelWeather> mCityModelWeathers;
-
+    private final String TAG = "States";
+    private WeatherPresenter weatherPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initComponent();
+        itemSpinnerSelected();
+    }
 
-        name_city=findViewById(R.id.name_city);
-        current_temperature=findViewById(R.id.temperature);
-        coat_of_arms=findViewById(R.id.coat_of_arms);
-        select_city=findViewById(R.id.spinner);
+    private void initComponent() {
+        weatherPresenter=new WeatherPresenter(this);
+        weatherPresenter.initArrays();
+        weatherPresenter.fillingOutList();
+        mCityModelWeathers=weatherPresenter.getCityModelWeathers();
+        nameCity = findViewById(R.id.name_city);
+        currentTemperature = findViewById(R.id.temperature);
+        coatOfArms = findViewById(R.id.coat_of_arms);
+        selectCity = findViewById(R.id.spinner);
+        textHumidity=findViewById(R.id.text_humidity);
+        textOvercast=findViewById(R.id.text_overcast);
+    }
 
-        name_city_list=getResources().getStringArray(R.array.name_city);
-        temperature_city_list=getResources().getStringArray(R.array.temperature_array);
-        id_image_list=getResources().obtainTypedArray(R.array.icons_city);
-        mCityModelWeathers=new ArrayList<>();
-        filling_out_list();
 
-        select_city.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+    private void itemSpinnerSelected(){
+        selectCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                name_city.setText(mCityModelWeathers.get(i).getName_city());
-                current_temperature.setText(mCityModelWeathers.get(i).getTemperature());
-                coat_of_arms.setImageDrawable(mCityModelWeathers.get(i).getRes_image());
-
+                nameCity.setText(mCityModelWeathers.get(i).name_city);
+                currentTemperature.setText(mCityModelWeathers.get(i).temperature);
+                coatOfArms.setImageDrawable(mCityModelWeathers.get(i).res_image);
+                textOvercast.setText(mCityModelWeathers.get(i).overcast);
+                textHumidity.setText(mCityModelWeathers.get(i).humidity);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
-
     }
 
-
-    private void filling_out_list(){
-        for (int i = 0; i <name_city_list.length ; i++) {
-            mCityModelWeathers.add(new CityModelWeather(name_city_list[i],temperature_city_list[i],id_image_list.getDrawable(i)));
-        }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "MainActivity: onStart()");
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "MainActivity: onResume()");
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "MainActivity: onPause()");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        weatherPresenter.destroyObjects();
+        Log.d(TAG, "MainActivity: onStop()");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "MainActivity: onDestroy()");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "MainActivity: onRestart()");
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.d(TAG, "MainActivity: onBackPressed()");
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "MainActivity: onSaveInstanceState()");
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        Log.d(TAG, "MainActivity: onRestoreInstanceState()");
+    }
 }

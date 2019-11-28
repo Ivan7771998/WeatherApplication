@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">WeatherApplication</string>
+    <string name="show_overcast">показывать облачность</string>
+    <string name="show_humidity">показывать влажность</string>
 
     <array name="name_city">
 
@@ -11,16 +13,34 @@
         <item>Сочи</item>
 
     </array>
-    <string-array name="temperature_array">
+    <string-array name="overcast_array">
+        <item>Перисто-кучевые</item>
+        <item>Перистые</item>
+        <item>Перисто-слоистые</item>
+        <item>Высококучевые</item>
+        <item>Слоисто-дождевые</item>
+        <item>Слоистые</item>
+    </string-array>
 
+    <string-array name="humidity_array">
+        <item>96%</item>
+        <item>82%</item>
+        <item>60%</item>
+        <item>56%</item>
+        <item>76%</item>
+        <item>70%</item>
+    </string-array>
+
+
+    <string-array name="temperature_array">
         <item>-2</item>
         <item>+5</item>
         <item>+6</item>
         <item>+9</item>
         <item>+9</item>
         <item>+12</item>
-
     </string-array>
+
 
     <array name="icons_city">
         <item>@drawable/moscow</item>
