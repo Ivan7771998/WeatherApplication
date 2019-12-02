@@ -61,16 +61,69 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
             android:entries="@array/name_city"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temperature"
+            app:layout_constraintTop_toBottomOf="@+id/checkBox_humidity"
             app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/text_humidity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            tools:text="96%"
+            android:textAlignment="center"
+            android:textColor="#1530DB"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/temperature" />
+
+        <TextView
+            android:id="@+id/text_overcast"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            tools:text="Туман"
+            android:textAlignment="center"
+            android:textColor="#1530DB"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_humidity" />
+
+        <CheckBox
+            android:id="@+id/checkBox_overcast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:checked="true"
+            android:text="@string/show_overcast"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_overcast" />
+
+        <CheckBox
+            android:id="@+id/checkBox_humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:checked="true"
+            android:text="@string/show_humidity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/checkBox_overcast"
+            app:layout_constraintTop_toBottomOf="@+id/checkBox_overcast" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
