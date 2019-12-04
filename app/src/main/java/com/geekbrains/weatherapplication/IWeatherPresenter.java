@@ -1,5 +1,10 @@
 package com.geekbrains.weatherapplication;
 
+
+import android.app.Activity;
+
+import com.geekbrains.weatherapplication.model.CityModelWeather;
+
 import java.util.List;
 
 interface IWeatherPresenter {
@@ -10,5 +15,6 @@ interface IWeatherPresenter {
 
     List<CityModelWeather> getCityModelWeathers();
 
-    void destroyObjects();
+    void goToCurrentCityWeather(int indexCity, Activity activity);
+
 }

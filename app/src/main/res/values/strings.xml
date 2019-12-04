@@ -2,6 +2,9 @@
     <string name="app_name">WeatherApplication</string>
     <string name="show_overcast">показывать облачность</string>
     <string name="show_humidity">показывать влажность</string>
+    <string name="bnt_back">Назад</string>
+    <string name="btn_show_weather">Посмотреть погоду</string>
+    <string name="more_details">Подробнее</string>
 
     <array name="name_city">
 
@@ -13,6 +16,16 @@
         <item>Сочи</item>
 
     </array>
+
+    <string-array name="url_city_weather">
+        <item>https://www.gismeteo.ru/weather-moscow-4368/</item>
+        <item>https://www.gismeteo.ru/weather-taganrog-5106/</item>
+        <item>https://www.gismeteo.ru/weather-rostov-na-donu-5110/</item>
+        <item>https://www.gismeteo.ru/weather-krasnodar-5136/</item>
+        <item>https://www.gismeteo.ru/weather-anapa-5211/</item>
+        <item>https://www.gismeteo.ru/weather-sochi-5233/</item>
+    </string-array>
+
     <string-array name="overcast_array">
         <item>Перисто-кучевые</item>
         <item>Перистые</item>
