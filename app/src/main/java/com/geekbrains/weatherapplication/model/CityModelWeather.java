@@ -2,7 +2,9 @@ package com.geekbrains.weatherapplication;
 
 import android.graphics.drawable.Drawable;
 
-class CityModelWeather {
+import java.io.Serializable;
+
+class CityModelWeather implements Serializable {
 
     String name_city;
     String temperature;
