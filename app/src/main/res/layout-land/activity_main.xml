@@ -1,69 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scroll"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <!-- Фрагмент с выбором городов -->
+    <fragment android:name="com.geekbrains.weatherapplication.fragments.CitiesFragment"
+        android:id="@+id/cities"
+        android:layout_weight="1"
+        android:layout_width="0px"
+        android:layout_height="match_parent" />
 
-        android:id="@+id/list_city"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <fragment android:name="com.geekbrains.weatherapplication.fragments.CoatOfArmsFragment"
+        android:id="@+id/about_current_city"
+        android:layout_weight="1"
+        android:layout_width="0px"
+        android:layout_height="match_parent" />
 
-
-        <ImageView
-            android:id="@+id/image_city"
-            android:layout_width="209dp"
-            android:layout_height="213dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/taganrog"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/name_city"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
-            android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image_city"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Таганрог" />
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:entries="@array/name_city"
-            android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image_city"
-            app:layout_constraintTop_toBottomOf="@+id/name_city" />
-
-        <Button
-            android:id="@+id/btn_weather"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="10dp"
-            android:text="@string/btn_show_weather"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image_city"
-            app:layout_constraintTop_toBottomOf="@+id/spinner" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</LinearLayout>
