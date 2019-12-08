@@ -9,8 +9,11 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import androidx.fragment.app.FragmentTransaction;
+
 import com.geekbrains.weatherapplication.fragments.CoatOfArmsFragment;
+
 import java.util.Objects;
 
 public class WeatherPresenter implements IWeatherPresenter {
@@ -29,14 +32,12 @@ public class WeatherPresenter implements IWeatherPresenter {
         this.emptyTextView = emptyTextView;
     }
 
-
-
     @Override
     public void onActivityCreatedStart(Bundle savedInstanceState) {
         isExistCoatOfArms = context.getResources().getConfiguration().orientation
                 == Configuration.ORIENTATION_LANDSCAPE;
         if (savedInstanceState != null) {
-            currentPosition = savedInstanceState.getInt("CurrentCity", 0);
+            currentPosition = savedInstanceState.getInt(MainActivity.INDEX_ITEM, 0);
         }
         if (isExistCoatOfArms) {
             listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -57,28 +58,27 @@ public class WeatherPresenter implements IWeatherPresenter {
         });
     }
 
-
     private void showCoatOfArms() {
         MainActivity mainActivity = (MainActivity) activity;
         if (isExistCoatOfArms) {
             listView.setItemChecked(currentPosition, true);
             CoatOfArmsFragment detail = (CoatOfArmsFragment)
                     Objects.requireNonNull(mainActivity).getSupportFragmentManager()
-                            .findFragmentById(R.id.about_current_city);
-                Bundle bundle = new Bundle();
-                bundle.putInt("index",currentPosition);
-                if (detail == null || detail.getIndex() != currentPosition) {
-                    detail = CoatOfArmsFragment.create(getCurrentPosition());
-                    detail.setArguments(bundle);
-                    FragmentTransaction ft = mainActivity.getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.about_current_city, detail);
-                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                    ft.commit();
-                }
+                            .findFragmentByTag(MainActivity.TAG_FRAGMENT);
+            Bundle bundle = new Bundle();
+            bundle.putInt(MainActivity.INDEX_ITEM, currentPosition);
+            if (detail == null || detail.getIndex() != currentPosition) {
+                detail = CoatOfArmsFragment.create(getCurrentPosition());
+                detail.setArguments(bundle);
+                FragmentTransaction ft = mainActivity.getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.container, detail);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.commit();
+            }
         } else {
             Intent intent = new Intent();
             intent.setClass(Objects.requireNonNull(mainActivity), CurrentCityWeatherActivity.class);
-            intent.putExtra("index", getCurrentPosition());
+            intent.putExtra(MainActivity.INDEX_ITEM, getCurrentPosition());
             mainActivity.startActivity(intent);
         }
     }

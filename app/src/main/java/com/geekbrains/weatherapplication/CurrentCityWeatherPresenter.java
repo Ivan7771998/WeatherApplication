@@ -72,9 +72,4 @@ public class CurrentCityWeatherPresenter implements ICurrentCityWeatherPresenter
         textOvercast.setText(mCityModelWeathers.get(position).overcast);
         imageCity.setImageDrawable(mCityModelWeathers.get(position).res_image);
     }
-
-    @Override
-    public List<CityModelWeather> getCityModelWeathers() {
-        return mCityModelWeathers;
-    }
 }

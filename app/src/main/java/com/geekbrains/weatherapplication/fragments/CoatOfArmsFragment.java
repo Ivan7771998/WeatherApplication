@@ -2,7 +2,6 @@ package com.geekbrains.weatherapplication.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,20 +15,20 @@ import com.geekbrains.weatherapplication.MainActivity;
 import com.geekbrains.weatherapplication.R;
 
 public class CoatOfArmsFragment extends Fragment {
-    CurrentCityWeatherPresenter currentCityWeatherPresenter;
+    private CurrentCityWeatherPresenter currentCityWeatherPresenter;
 
     public static CoatOfArmsFragment create(int position) {
-        CoatOfArmsFragment fragment = new CoatOfArmsFragment();    // создание
+        CoatOfArmsFragment fragment = new CoatOfArmsFragment();
         Bundle args = new Bundle();
-        args.putInt("CurrentCity", position);
+        args.putInt(MainActivity.INDEX_ITEM, position);
         fragment.setArguments(args);
         return fragment;
     }
 
     public int getIndex() {
         try {
-            int index = getArguments().getInt("CurrentCity");
-            Log.d("INDEX  ", "" + index);
+            assert getArguments() != null;
+            int index = getArguments().getInt(MainActivity.INDEX_ITEM);
             currentCityWeatherPresenter.setCurrentCity(index);
             return index;
         } catch (Exception e) {
@@ -47,11 +46,12 @@ public class CoatOfArmsFragment extends Fragment {
         currentCityWeatherPresenter.initArrays();
         currentCityWeatherPresenter.fillingOutList();
         try {
-            currentCityWeatherPresenter.setCurrentCity(getArguments().getInt("index"));
+            assert getArguments() != null;
+            currentCityWeatherPresenter.setCurrentCity(getArguments().getInt(MainActivity.INDEX_ITEM));
         } catch (Exception e) {
             currentCityWeatherPresenter.setCurrentCity(0);
         }
-        return view;   // Вместо макета используем сразу картинку
+        return view;
     }
 
     @Override

@@ -14,7 +14,5 @@ public interface ICurrentCityWeatherPresenter {
 
     void fillingOutList();
 
-    List<CityModelWeather> getCityModelWeathers();
-
     void initComponent(View view);
 }
