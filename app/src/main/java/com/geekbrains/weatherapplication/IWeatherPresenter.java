@@ -1,20 +1,12 @@
 package com.geekbrains.weatherapplication;
 
-
-import android.app.Activity;
-
-import com.geekbrains.weatherapplication.model.CityModelWeather;
-
-import java.util.List;
+import android.os.Bundle;
 
 interface IWeatherPresenter {
 
-    void initArrays();
+    void initList();
 
-    void fillingOutList();
+    int getCurrentPosition();
 
-    List<CityModelWeather> getCityModelWeathers();
-
-    void goToCurrentCityWeather(int indexCity, Activity activity);
-
+    void onActivityCreatedStart(Bundle savedInstanceState);
 }

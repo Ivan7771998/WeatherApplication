@@ -1,73 +1,53 @@
 package com.geekbrains.weatherapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.provider.ContactsContract;
-import android.util.Log;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.geekbrains.weatherapplication.model.CityModelWeather;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import java.io.Serializable;
+import com.geekbrains.weatherapplication.fragments.CoatOfArmsFragment;
 
 public class CurrentCityWeatherActivity extends AppCompatActivity {
-
-    private TextView nameCity;
-    private TextView currentTemperature;
-    private TextView textOvercast;
-    private TextView textHumidity;
-    private Button btnBack;
-    private Button btnMore;
-    private CityModelWeather cityModelWeather;
-    private CurrentCityWeatherPresenter currentCityWeatherPresenter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_city_wearher);
-        currentCityWeatherPresenter = new CurrentCityWeatherPresenter(this);
-        initComponent();
-        getDataFromFirstActivity();
-        btnBackOnClick();
-        btnMoreonClick();
+        addFragment();
     }
 
-    private void initComponent() {
-        currentCityWeatherPresenter = new CurrentCityWeatherPresenter(this);
-        nameCity = findViewById(R.id.current_name_city);
-        currentTemperature = findViewById(R.id.current_temperature);
-        textHumidity = findViewById(R.id.current_text_humidity);
-        textOvercast = findViewById(R.id.current_text_overcast);
-        btnBack = findViewById(R.id.btn_back);
-        btnMore = findViewById(R.id.btn_internet);
+    private void addFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        CoatOfArmsFragment coatOfArmsFragment = (CoatOfArmsFragment)
+                fragmentManager.findFragmentByTag(MainActivity.TAG_FRAGMENT);
+        Bundle bundle = new Bundle();
+        if (coatOfArmsFragment == null) {
+            coatOfArmsFragment = new CoatOfArmsFragment();
+            bundle.putInt(MainActivity.INDEX_ITEM, getIntent()
+                    .getIntExtra(MainActivity.INDEX_ITEM, 0));
+            coatOfArmsFragment.setArguments(bundle);
+            transaction.add(R.id.container, coatOfArmsFragment, MainActivity.TAG_FRAGMENT);
+            transaction.commit();
+        } else {
+            transaction.remove(coatOfArmsFragment);
+            coatOfArmsFragment = new CoatOfArmsFragment();
+            bundle.putInt(MainActivity.INDEX_ITEM, getIntent()
+                    .getIntExtra(MainActivity.INDEX_ITEM, 0));
+            coatOfArmsFragment.setArguments(bundle);
+            transaction.add(R.id.container, coatOfArmsFragment, MainActivity.TAG_FRAGMENT);
+            transaction.commit();
+        }
     }
 
-    private void getDataFromFirstActivity() {
-        cityModelWeather = getIntent().getParcelableExtra(MainActivity.KEY_TO_DATA);
-        assert cityModelWeather != null;
-        nameCity.setText(cityModelWeather.name_city);
-        currentTemperature.setText(cityModelWeather.temperature);
-        textHumidity.setText(cityModelWeather.humidity);
-        textOvercast.setText(cityModelWeather.overcast);
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        int countOfFragmentInManager = getSupportFragmentManager().getBackStackEntryCount();
+        if (countOfFragmentInManager > 0) {
+            getSupportFragmentManager().popBackStack();
+        }
     }
-
-    void btnBackOnClick() {
-        btnBack.setOnClickListener(v -> {
-            currentCityWeatherPresenter.gobBtnBack();
-        });
-    }
-
-    void btnMoreonClick() {
-        btnMore.setOnClickListener(v -> {
-            currentCityWeatherPresenter.gobBtnWebsite(cityModelWeather.url);
-        });
-    }
-
 }
 
 

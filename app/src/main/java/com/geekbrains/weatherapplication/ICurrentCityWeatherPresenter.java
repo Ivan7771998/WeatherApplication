@@ -1,8 +1,18 @@
 package com.geekbrains.weatherapplication;
 
+import android.view.View;
+
+import com.geekbrains.weatherapplication.model.CityModelWeather;
+
+import java.util.List;
+
 public interface ICurrentCityWeatherPresenter {
 
-    void gobBtnBack();
+    void initArrays();
 
-    void gobBtnWebsite(String url);
+    void setCurrentCity(int position);
+
+    void fillingOutList();
+
+    void initComponent(View view);
 }

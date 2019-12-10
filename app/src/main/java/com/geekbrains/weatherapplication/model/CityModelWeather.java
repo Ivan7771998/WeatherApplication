@@ -11,7 +11,7 @@ public class CityModelWeather implements Parcelable {
     public String overcast;
     public String humidity;
     public Drawable res_image;
-    public String url;
+    private String url;
 
     public CityModelWeather(String name_city, String temperature, Drawable res_image,
                             String overcast, String humidity, String url) {
