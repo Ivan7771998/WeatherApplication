@@ -44,6 +44,7 @@ public class CoatOfArmsFragment extends Fragment {
         currentCityWeatherPresenter = new CurrentCityWeatherPresenter(getActivity());
         currentCityWeatherPresenter.initComponent(view);
         currentCityWeatherPresenter.initArrays();
+        currentCityWeatherPresenter.initListHistoryTemperature();
         currentCityWeatherPresenter.fillingOutList();
         try {
             assert getArguments() != null;

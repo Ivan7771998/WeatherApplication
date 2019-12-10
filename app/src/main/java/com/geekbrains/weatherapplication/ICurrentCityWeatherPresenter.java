@@ -15,4 +15,6 @@ public interface ICurrentCityWeatherPresenter {
     void fillingOutList();
 
     void initComponent(View view);
+
+    void initListHistoryTemperature();
 }

@@ -1,20 +1,21 @@
 package com.geekbrains.weatherapplication;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.content.res.TypedArray;
-import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.geekbrains.weatherapplication.adapters.RecyclerViewAdapterTemperature;
 import com.geekbrains.weatherapplication.model.CityModelWeather;
+import com.geekbrains.weatherapplication.model.HistoryDataTemperature;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.app.Activity.RESULT_OK;
 
 public class CurrentCityWeatherPresenter implements ICurrentCityWeatherPresenter {
 
@@ -23,6 +24,8 @@ public class CurrentCityWeatherPresenter implements ICurrentCityWeatherPresenter
     private String[] temperatureCityList;
     private String[] textOvercastList;
     private String[] textHumidityList;
+    private String[] textHistoryTimeList;
+    private String[] textHistoryTemperatureList;
     private String[] url;
     private TextView nameCity;
     private TextView currentTemperature;
@@ -30,6 +33,7 @@ public class CurrentCityWeatherPresenter implements ICurrentCityWeatherPresenter
     private TextView textHumidity;
     private ImageView imageCity;
     private TypedArray idImageList;
+    private RecyclerView recyclerView;
     private List<CityModelWeather> mCityModelWeathers;
 
     public CurrentCityWeatherPresenter(Activity activity) {
@@ -44,6 +48,7 @@ public class CurrentCityWeatherPresenter implements ICurrentCityWeatherPresenter
         textHumidity = view.findViewById(R.id.current_text_humidity);
         textOvercast = view.findViewById(R.id.current_text_overcast);
         imageCity = view.findViewById(R.id.image_city);
+        recyclerView = view.findViewById(R.id.history_temperature_recycler);
     }
 
     @Override
@@ -54,6 +59,8 @@ public class CurrentCityWeatherPresenter implements ICurrentCityWeatherPresenter
         textOvercastList = activity.getResources().getStringArray(R.array.overcast_array);
         idImageList = activity.getResources().obtainTypedArray(R.array.icons_city);
         url = activity.getResources().getStringArray(R.array.url_city_weather);
+        textHistoryTimeList = activity.getResources().getStringArray(R.array.temperature_array_history_time);
+        textHistoryTemperatureList = activity.getResources().getStringArray(R.array.temperature_array_history);
     }
 
     @Override
@@ -62,6 +69,17 @@ public class CurrentCityWeatherPresenter implements ICurrentCityWeatherPresenter
             mCityModelWeathers.add(new CityModelWeather(nameCityList[i], temperatureCityList[i],
                     idImageList.getDrawable(i), textOvercastList[i], textHumidityList[i], url[i]));
         }
+    }
+
+    @Override
+    public void initListHistoryTemperature() {
+        HistoryDataTemperature historyDataTemperature = new HistoryDataTemperature(textHistoryTimeList,
+                textHistoryTemperatureList);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+        RecyclerViewAdapterTemperature adapter = new RecyclerViewAdapterTemperature(historyDataTemperature);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override

@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.geekbrains.weatherapplication.adapters.RecyclerViewAdapterCity;
 import com.geekbrains.weatherapplication.fragments.CoatOfArmsFragment;
 
 import java.util.Objects;
@@ -21,12 +25,14 @@ public class WeatherPresenter implements IWeatherPresenter {
     private ListView listView;
     private Context context;
     private Activity activity;
-    private TextView emptyTextView;
+    private TextView emptyTextView; //И чтобы установить пустую View тоже метода нет у Recycler
     private boolean isExistCoatOfArms;  // Можно ли расположить рядом фрагмент с гербом
     private int currentPosition = 0;    // Текущая позиция (выбранный город)
+    private RecyclerView mRecyclerView;
+    private RecyclerViewAdapterCity adapter;
 
-    public WeatherPresenter(Activity activity, Context context, ListView listView, TextView emptyTextView) {
-        this.listView = listView;
+    public WeatherPresenter(Activity activity, Context context, RecyclerView recyclerView, TextView emptyTextView) {
+        this.mRecyclerView = recyclerView;
         this.context = context;
         this.activity = activity;
         this.emptyTextView = emptyTextView;
@@ -40,28 +46,26 @@ public class WeatherPresenter implements IWeatherPresenter {
             currentPosition = savedInstanceState.getInt(MainActivity.INDEX_ITEM, 0);
         }
         if (isExistCoatOfArms) {
-            listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            //listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
             showCoatOfArms();
         }
     }
 
     @Override
     public void initList() {
-        ArrayAdapter adapter =
-                ArrayAdapter.createFromResource(Objects.requireNonNull(context), R.array.name_city,
-                        android.R.layout.simple_list_item_activated_1);
-        listView.setAdapter(adapter);
-        listView.setEmptyView(emptyTextView);
-        listView.setOnItemClickListener((parent, view, position, id) -> {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(activity.getBaseContext());
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setAdapter(new RecyclerViewAdapterCity(activity
+                .getResources().getStringArray(R.array.name_city), position -> {
             currentPosition = position;
             showCoatOfArms();
-        });
+        }));
     }
 
     private void showCoatOfArms() {
         MainActivity mainActivity = (MainActivity) activity;
         if (isExistCoatOfArms) {
-            listView.setItemChecked(currentPosition, true);
+            //listView.setItemChecked(currentPosition, true); метода у RecyclerView такого нет( не стал заморачиваться с выделением
             CoatOfArmsFragment detail = (CoatOfArmsFragment)
                     Objects.requireNonNull(mainActivity).getSupportFragmentManager()
                             .findFragmentByTag(MainActivity.TAG_FRAGMENT);
