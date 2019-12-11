@@ -9,6 +9,8 @@
     <string name="time">Время</string>
     <string name="empty_list">Empty list</string>
     <string name="temperature">Температура</string>
+    <string name="input_city">Введите город</string>
+    <string name="btn_add_city">Добавить</string>
 
     <array name="name_city">
 

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,9 +35,8 @@ public class CitiesFragment extends Fragment {
     }
 
     private void initViews(View view) {
-        RecyclerView mRecyclerView = view.findViewById(R.id.cities_list_view);
-        TextView emptyTextView = view.findViewById(R.id.cities_list_empty_view);
-        weatherPresenter = new WeatherPresenter(getActivity(), getContext(), mRecyclerView, emptyTextView);
+        weatherPresenter = new WeatherPresenter(getActivity(), getContext());
+        weatherPresenter.initViewComponent(view);
     }
 
     @Override

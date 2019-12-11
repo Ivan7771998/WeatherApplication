@@ -5,21 +5,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.geekbrains.weatherapplication.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RecyclerViewAdapterCity extends RecyclerView.Adapter<RecyclerViewAdapterCity.ViewHolder> {
 
-    private String[] data;
+    private ArrayList<String> data;
     private OnItemClickListener listener;
 
-    public RecyclerViewAdapterCity(String[] data, OnItemClickListener listener) {
+    public RecyclerViewAdapterCity(ArrayList<String> data, OnItemClickListener listener) {
         if (data != null) {
             this.data = data;
             this.listener = listener;
         }
+    }
+
+    public void addItem(String newCity) {
+        data.add(1, newCity);
+        notifyItemInserted(1);
     }
 
     @NonNull
@@ -33,7 +42,7 @@ public class RecyclerViewAdapterCity extends RecyclerView.Adapter<RecyclerViewAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textCity.setText(data[position]);
+        holder.textCity.setText(data.get(position));
         holder.textCity.setOnClickListener(view -> {
             listener.onItemClick(position);
         });
@@ -41,7 +50,7 @@ public class RecyclerViewAdapterCity extends RecyclerView.Adapter<RecyclerViewAd
 
     @Override
     public int getItemCount() {
-        return data.length;
+        return data.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
