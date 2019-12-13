@@ -5,7 +5,12 @@
     <string name="bnt_back">Назад</string>
     <string name="btn_show_weather">Посмотреть погоду</string>
     <string name="more_details">Подробнее</string>
+    <string name="history_temperature_title">История температуры</string>
+    <string name="time">Время</string>
     <string name="empty_list">Empty list</string>
+    <string name="temperature">Температура</string>
+    <string name="input_city">Введите город</string>
+    <string name="btn_add_city">Добавить</string>
 
     <array name="name_city">
 
@@ -53,6 +58,27 @@
         <item>+9</item>
         <item>+9</item>
         <item>+12</item>
+    </string-array>
+
+    <string-array name="temperature_array_history_time">
+        <item>00:00</item>
+        <item>03:00</item>
+        <item>06:00</item>
+        <item>09:00</item>
+        <item>12:00</item>
+        <item>15:00</item>
+        <item>18:00</item>
+        <item>21:00</item>
+    </string-array>
+    <string-array name="temperature_array_history">
+        <item>-2</item>
+        <item>-1</item>
+        <item>+1</item>
+        <item>+5</item>
+        <item>+9</item>
+        <item>+3</item>
+        <item>-1</item>
+        <item>-6</item>
     </string-array>
 
 

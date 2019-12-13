@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.geekbrains.weatherapplication.MainActivity;
 import com.geekbrains.weatherapplication.R;
@@ -33,9 +35,8 @@ public class CitiesFragment extends Fragment {
     }
 
     private void initViews(View view) {
-        ListView listView = view.findViewById(R.id.cities_list_view);
-        TextView emptyTextView = view.findViewById(R.id.cities_list_empty_view);
-        weatherPresenter = new WeatherPresenter(getActivity(), getContext(), listView, emptyTextView);
+        weatherPresenter = new WeatherPresenter(getActivity(), getContext());
+        weatherPresenter.initViewComponent(view);
     }
 
     @Override
