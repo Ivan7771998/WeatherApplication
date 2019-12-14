@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.geekbrains.weatherapplication.CurrentCityWeatherPresenter;
-import com.geekbrains.weatherapplication.MainActivity;
+import com.geekbrains.weatherapplication.activities.MainActivity;
 import com.geekbrains.weatherapplication.R;
 
 public class CoatOfArmsFragment extends Fragment {

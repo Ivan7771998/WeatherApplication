@@ -1,4 +1,4 @@
-package com.geekbrains.weatherapplication;
+package com.geekbrains.weatherapplication.activities;
 
 import android.os.Bundle;
 
@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.geekbrains.weatherapplication.R;
+import com.geekbrains.weatherapplication.activities.MainActivity;
 import com.geekbrains.weatherapplication.fragments.CoatOfArmsFragment;
 
 public class CurrentCityWeatherActivity extends AppCompatActivity {
