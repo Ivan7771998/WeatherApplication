@@ -26,16 +26,16 @@ public class CurrentCityWeatherActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         if (coatOfArmsFragment == null) {
             coatOfArmsFragment = new CoatOfArmsFragment();
-            bundle.putInt(MainActivity.INDEX_ITEM, getIntent()
-                    .getIntExtra(MainActivity.INDEX_ITEM, 0));
+            bundle.putString(MainActivity.CURRENT_CITY, getIntent()
+                    .getStringExtra(MainActivity.CURRENT_CITY));
             coatOfArmsFragment.setArguments(bundle);
             transaction.add(R.id.container, coatOfArmsFragment, MainActivity.TAG_FRAGMENT);
             transaction.commit();
         } else {
             transaction.remove(coatOfArmsFragment);
             coatOfArmsFragment = new CoatOfArmsFragment();
-            bundle.putInt(MainActivity.INDEX_ITEM, getIntent()
-                    .getIntExtra(MainActivity.INDEX_ITEM, 0));
+            bundle.putString(MainActivity.CURRENT_CITY, getIntent()
+                    .getStringExtra(MainActivity.CURRENT_CITY));
             coatOfArmsFragment.setArguments(bundle);
             transaction.add(R.id.container, coatOfArmsFragment, MainActivity.TAG_FRAGMENT);
             transaction.commit();

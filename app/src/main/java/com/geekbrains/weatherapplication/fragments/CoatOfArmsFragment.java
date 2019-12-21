@@ -17,22 +17,22 @@ import com.geekbrains.weatherapplication.R;
 public class CoatOfArmsFragment extends Fragment {
     private CurrentCityWeatherPresenter currentCityWeatherPresenter;
 
-    public static CoatOfArmsFragment create(int position) {
+    public static CoatOfArmsFragment create(String nameCity) {
         CoatOfArmsFragment fragment = new CoatOfArmsFragment();
         Bundle args = new Bundle();
-        args.putInt(MainActivity.INDEX_ITEM, position);
+        args.putString(MainActivity.CURRENT_CITY, nameCity);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public int getIndex() {
+    public String getCurrentCity() {
         try {
             assert getArguments() != null;
-            int index = getArguments().getInt(MainActivity.INDEX_ITEM);
-            currentCityWeatherPresenter.setCurrentCity(index);
-            return index;
+            String currentCity = getArguments().getString(MainActivity.CURRENT_CITY);
+            currentCityWeatherPresenter.setCurrentCity(currentCity);
+            return currentCity;
         } catch (Exception e) {
-            return 0;
+            return "";
         }
     }
 
@@ -43,14 +43,11 @@ public class CoatOfArmsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_current_city, container, false);
         currentCityWeatherPresenter = new CurrentCityWeatherPresenter(getActivity());
         currentCityWeatherPresenter.initComponent(view);
-        currentCityWeatherPresenter.initArrays();
-        currentCityWeatherPresenter.initListHistoryTemperature();
-        currentCityWeatherPresenter.fillingOutList();
         try {
             assert getArguments() != null;
-            currentCityWeatherPresenter.setCurrentCity(getArguments().getInt(MainActivity.INDEX_ITEM));
+            currentCityWeatherPresenter.setCurrentCity(getArguments().getString(MainActivity.CURRENT_CITY));
         } catch (Exception e) {
-            currentCityWeatherPresenter.setCurrentCity(0);
+            currentCityWeatherPresenter.setCurrentCity("Moscow");
         }
         return view;
     }

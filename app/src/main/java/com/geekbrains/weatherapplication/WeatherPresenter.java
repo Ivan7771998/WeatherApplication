@@ -19,6 +19,7 @@ import com.geekbrains.weatherapplication.activities.CurrentCityWeatherActivity;
 import com.geekbrains.weatherapplication.activities.MainActivity;
 import com.geekbrains.weatherapplication.adapters.RecyclerViewAdapterCity;
 import com.geekbrains.weatherapplication.fragments.CoatOfArmsFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -31,12 +32,13 @@ public class WeatherPresenter implements IWeatherPresenter {
     private Activity activity;
     private TextView emptyTextView; //И чтобы установить пустую View тоже метода нет у Recycler
     private boolean isExistCoatOfArms;  // Можно ли расположить рядом фрагмент с гербом
-    private int currentPosition = 0;    // Текущая позиция (выбранный город)
+    private String currentCity;    // Текущая позиция (выбранный город)
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapterCity adapterCity;
     private EditText addCityText;
-    private Button btnAddCity;
+    private FloatingActionButton btnAddCity;
     private CoordinatorLayout coordinatorLayout;
+    private String [] cities;
 
     public WeatherPresenter(Activity activity, Context context) {
         this.context = context;
@@ -48,11 +50,10 @@ public class WeatherPresenter implements IWeatherPresenter {
         isExistCoatOfArms = context.getResources().getConfiguration().orientation
                 == Configuration.ORIENTATION_LANDSCAPE;
         if (savedInstanceState != null) {
-            currentPosition = savedInstanceState.getInt(MainActivity.INDEX_ITEM, 0);
+            currentCity = savedInstanceState.getString(MainActivity.CURRENT_CITY,"city");
         }
         if (isExistCoatOfArms) {
-            //listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            showCoatOfArms();
+            showCoatOfArms(currentCity);
         }
     }
 
@@ -67,24 +68,24 @@ public class WeatherPresenter implements IWeatherPresenter {
 
     private void addNewCity() {
         btnAddCity.setOnClickListener(v -> {
-            if (addCityText.getText().length() != 0) {
-                Snackbar snackbar = Snackbar
-                        .make(coordinatorLayout, context.getResources()
-                                .getString(R.string.btn_add_city_confirm), Snackbar.LENGTH_LONG)
-                        .setAction("Да", view -> {
-                            Snackbar.make(coordinatorLayout,
+            if (addCityText.getText().length() != 0&&!adapterCity.checkIsItemInData(addCityText.getText().toString())) {
+                Snackbar.make(coordinatorLayout,
                                     context.getResources()
                                             .getString(R.string.btn_add_city_complete),
-                                    Snackbar.LENGTH_SHORT).show();
-                            adapterCity.addItem(addCityText.getText().toString());
-                        });
-
-                snackbar.show();
-            } else {
+                        Snackbar.LENGTH_SHORT).show();
+                adapterCity.addItem(addCityText.getText().toString());
+            } else if (addCityText.getText().length() == 0){
                 Snackbar snackbar = Snackbar
                         .make(coordinatorLayout,
                                 context.getResources()
                                         .getString(R.string.btn_add_city_no_text),
+                                Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }else{
+                Snackbar snackbar = Snackbar
+                        .make(coordinatorLayout,
+                                context.getResources()
+                                        .getString(R.string.btn_add_city_repeat_city),
                                 Snackbar.LENGTH_LONG);
                 snackbar.show();
             }
@@ -95,17 +96,15 @@ public class WeatherPresenter implements IWeatherPresenter {
     public void initList() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(activity.getBaseContext());
         mRecyclerView.setLayoutManager(layoutManager);
-
-        adapterCity = new RecyclerViewAdapterCity(new ArrayList<>(Arrays.asList(activity
-                .getResources().getStringArray(R.array.name_city))), position -> {
-            currentPosition = position;
-            showCoatOfArms();
+        cities=activity.getResources().getStringArray(R.array.name_city);
+        adapterCity = new RecyclerViewAdapterCity(new ArrayList<>(Arrays.asList(cities)), currentCity -> {
+            showCoatOfArms(currentCity);
         });
         mRecyclerView.setAdapter(adapterCity);
         addNewCity();
     }
 
-    private void showCoatOfArms() {
+    private void showCoatOfArms(String currentCity) {
         MainActivity mainActivity = (MainActivity) activity;
         if (isExistCoatOfArms) {
             //listView.setItemChecked(currentPosition, true); метода у RecyclerView такого нет( не стал заморачиваться с выделением
@@ -113,9 +112,9 @@ public class WeatherPresenter implements IWeatherPresenter {
                     Objects.requireNonNull(mainActivity).getSupportFragmentManager()
                             .findFragmentByTag(MainActivity.TAG_FRAGMENT);
             Bundle bundle = new Bundle();
-            bundle.putInt(MainActivity.INDEX_ITEM, currentPosition);
-            if (detail == null || detail.getIndex() != currentPosition) {
-                detail = CoatOfArmsFragment.create(getCurrentPosition());
+            bundle.putString(MainActivity.CURRENT_CITY,currentCity );
+            if (detail == null) {
+                detail = CoatOfArmsFragment.create(currentCity);
                 detail.setArguments(bundle);
                 FragmentTransaction ft = mainActivity.getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.container, detail);
@@ -125,13 +124,9 @@ public class WeatherPresenter implements IWeatherPresenter {
         } else {
             Intent intent = new Intent();
             intent.setClass(Objects.requireNonNull(mainActivity), CurrentCityWeatherActivity.class);
-            intent.putExtra(MainActivity.INDEX_ITEM, getCurrentPosition());
+            intent.putExtra(MainActivity.CURRENT_CITY, addCityText.getText());
             mainActivity.startActivity(intent);
         }
-    }
-
-    public int getCurrentPosition() {
-        return currentPosition;
     }
 }
 

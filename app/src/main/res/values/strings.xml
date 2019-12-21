@@ -12,12 +12,20 @@
     <string name="input_city">Введите город</string>
     <string name="btn_add_city">Добавить</string>
     <string name="btn_add_city_no_text">Введите город для добавления в список!</string>
+    <string name="btn_add_city_repeat_city">Введенный город уже есть в списоке!</string>
     <string name="btn_add_city_confirm">Точно хотите добавить новый город?</string>
     <string name="btn_add_city_complete">Город успешно добавлен!</string>
     <string name="title_info_about_developer">о разработчике</string>
     <string name="title_profession">Профессия</string>
     <string name="name_profession">Андроид разработчик</string>
     <string name="developer_full_name">Попов Иван</string>
+    <string name="delete_city">Удалить город</string>
+    <string name="api_key" translatable="false">293da20ad6da8e2bb2974cc9760fbf87</string>
+    <string name="humidity">Влажность</string>
+    <string name="choose_city">Москва</string>
+    <string name="degree">℃</string>
+    <string name="overcast">Облачность</string>
+    <string name="city_not_found">Информация по данному городу не найдена!</string>
 
     <array name="name_city">
 

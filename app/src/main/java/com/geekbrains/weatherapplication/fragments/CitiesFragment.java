@@ -43,7 +43,7 @@ public class CitiesFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putInt(MainActivity.INDEX_ITEM, weatherPresenter.getCurrentPosition());
+        outState.putString(MainActivity.CURRENT_CITY,"");
         super.onSaveInstanceState(outState);
     }
 }

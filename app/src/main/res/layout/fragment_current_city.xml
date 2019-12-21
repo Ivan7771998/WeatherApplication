@@ -3,114 +3,139 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/background_current_city_fragment"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
-    <ScrollView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/current_city"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:ignore="UselessParent">
+        android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
 
-            android:id="@+id/current_city"
+        <TextView
+            android:id="@+id/current_name_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Saint-Petersburg" />
+
+        <TextView
+            android:id="@+id/todayDate"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/current_name_city"
+            tools:text="31 дек. 1999 Ср. 23.49" />
 
-            <ImageView
-                android:id="@+id/image_city"
-                android:layout_width="209dp"
-                android:layout_height="213dp"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/taganrog"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/current_temperature_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/temperature"
+            android:textAlignment="textEnd"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@id/middle_line"
+            app:layout_constraintTop_toBottomOf="@id/todayDate" />
 
-            <TextView
-                android:id="@+id/current_name_city"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="20dp"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textSize="25sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_city"
-                tools:text="Таганрог" />
+        <TextView
+            android:id="@+id/current_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toStartOf="@id/degreeWordUp"
+            app:layout_constraintTop_toBottomOf="@id/current_temperature_title"
+            tools:text="-5" />
 
-            <TextView
-                android:id="@+id/current_temperature"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:textAlignment="center"
-                android:textColor="#1530DB"
-                android:textSize="25sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/current_name_city"
-                tools:text="5 °C" />
+        <TextView
+            android:id="@+id/degreeWordUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/degree"
+            android:textColor="@color/colorPrimary"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="@+id/current_temperature"
+            app:layout_constraintEnd_toEndOf="@id/current_temperature_title" />
 
-            <TextView
-                android:id="@+id/current_text_humidity"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:textAlignment="center"
-                android:textColor="#1530DB"
-                android:textSize="25sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/current_temperature"
-                tools:text="96%" />
 
-            <TextView
-                android:id="@+id/current_text_overcast"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:textAlignment="center"
-                android:textColor="#1530DB"
-                android:textSize="25sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/current_text_humidity"
-                tools:text="Туман" />
+        <View
+            android:id="@+id/middle_line"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toBottomOf="@id/current_text_overcast"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/current_temperature_title" />
 
-            <TextView
-                android:id="@+id/history_temperature"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/history_temperature_title"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textSize="25sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/current_text_overcast" />
+        <TextView
+            android:id="@+id/current_title_humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/humidity"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/middle_line"
+            app:layout_constraintTop_toTopOf="@id/current_temperature_title" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/history_temperature_recycler"
-                android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/history_temperature" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        <TextView
+            android:id="@+id/current_text_humidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/current_title_humidity"
+            app:layout_constraintTop_toBottomOf="@id/current_title_humidity"
+            tools:text="99%" />
+
+        <TextView
+            android:id="@+id/overcastWord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/overcast"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/current_title_humidity"
+            app:layout_constraintTop_toBottomOf="@id/current_text_humidity" />
+
+        <TextView
+            android:id="@+id/current_text_overcast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/overcastWord"
+            app:layout_constraintTop_toBottomOf="@id/overcastWord"
+            tools:text="Частичная облачность" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

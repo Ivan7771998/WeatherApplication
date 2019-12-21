@@ -8,13 +8,8 @@ import java.util.List;
 
 public interface ICurrentCityWeatherPresenter {
 
-    void initArrays();
-
-    void setCurrentCity(int position);
-
-    void fillingOutList();
+    void setCurrentCity(String position);
 
     void initComponent(View view);
 
-    void initListHistoryTemperature();
 }

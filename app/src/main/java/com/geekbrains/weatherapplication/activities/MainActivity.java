@@ -14,7 +14,7 @@ import com.geekbrains.weatherapplication.fragments.CitiesFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String INDEX_ITEM = "index";
+    public static final String CURRENT_CITY = "city";
     public static final String TAG_FRAGMENT = "frag";
 
     @Override

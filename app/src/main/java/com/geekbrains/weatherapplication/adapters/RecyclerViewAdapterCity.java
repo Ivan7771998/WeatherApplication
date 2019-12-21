@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,8 +28,18 @@ public class RecyclerViewAdapterCity extends RecyclerView.Adapter<RecyclerViewAd
     }
 
     public void addItem(String newCity) {
-        data.add(1, newCity);
-        notifyItemInserted(1);
+        data.add(0,newCity);
+        notifyDataSetChanged();
+    }
+
+    private void deleteItem(int position){
+        data.remove(position);
+        notifyItemRemoved(position);
+        notifyDataSetChanged();
+    }
+
+    public boolean checkIsItemInData(String city) {
+        return data.contains(city);
     }
 
     @NonNull
@@ -43,8 +54,11 @@ public class RecyclerViewAdapterCity extends RecyclerView.Adapter<RecyclerViewAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.textCity.setText(data.get(position));
+        holder.deleteCity.setOnClickListener(V->{
+            deleteItem(position);
+        });
         holder.textCity.setOnClickListener(view -> {
-            listener.onItemClick(position);
+            listener.onItemClick(data.get(position));
         });
     }
 
@@ -55,14 +69,16 @@ public class RecyclerViewAdapterCity extends RecyclerView.Adapter<RecyclerViewAd
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView textCity;
+        ImageView deleteCity;
 
         ViewHolder(View view) {
             super(view);
-            textCity = itemView.findViewById(R.id.text_city);
+            textCity = view.findViewById(R.id.text_city);
+            deleteCity=view.findViewById(R.id.delete_city_btn);
         }
     }
 
     public interface OnItemClickListener {
-        void onItemClick(int position);
+        void onItemClick(String currentCity);
     }
 }
