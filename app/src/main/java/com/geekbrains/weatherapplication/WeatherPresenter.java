@@ -4,21 +4,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.geekbrains.weatherapplication.activities.CurrentCityWeatherActivity;
+import com.geekbrains.weatherapplication.activities.MainActivity;
 import com.geekbrains.weatherapplication.adapters.RecyclerViewAdapterCity;
 import com.geekbrains.weatherapplication.fragments.CoatOfArmsFragment;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +36,7 @@ public class WeatherPresenter implements IWeatherPresenter {
     private RecyclerViewAdapterCity adapterCity;
     private EditText addCityText;
     private Button btnAddCity;
+    private CoordinatorLayout coordinatorLayout;
 
     public WeatherPresenter(Activity activity, Context context) {
         this.context = context;
@@ -60,12 +62,31 @@ public class WeatherPresenter implements IWeatherPresenter {
         emptyTextView = view.findViewById(R.id.cities_list_empty_view);
         addCityText = view.findViewById(R.id.add_new_city);
         btnAddCity = view.findViewById(R.id.id_btn_add_city);
+        coordinatorLayout = view.findViewById(R.id.coordinatorLayout);
     }
 
     private void addNewCity() {
         btnAddCity.setOnClickListener(v -> {
             if (addCityText.getText().length() != 0) {
-                adapterCity.addItem(addCityText.getText().toString());
+                Snackbar snackbar = Snackbar
+                        .make(coordinatorLayout, context.getResources()
+                                .getString(R.string.btn_add_city_confirm), Snackbar.LENGTH_LONG)
+                        .setAction("Да", view -> {
+                            Snackbar.make(coordinatorLayout,
+                                    context.getResources()
+                                            .getString(R.string.btn_add_city_complete),
+                                    Snackbar.LENGTH_SHORT).show();
+                            adapterCity.addItem(addCityText.getText().toString());
+                        });
+
+                snackbar.show();
+            } else {
+                Snackbar snackbar = Snackbar
+                        .make(coordinatorLayout,
+                                context.getResources()
+                                        .getString(R.string.btn_add_city_no_text),
+                                Snackbar.LENGTH_LONG);
+                snackbar.show();
             }
         });
     }

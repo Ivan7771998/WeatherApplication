@@ -11,6 +11,13 @@
     <string name="temperature">Температура</string>
     <string name="input_city">Введите город</string>
     <string name="btn_add_city">Добавить</string>
+    <string name="btn_add_city_no_text">Введите город для добавления в список!</string>
+    <string name="btn_add_city_confirm">Точно хотите добавить новый город?</string>
+    <string name="btn_add_city_complete">Город успешно добавлен!</string>
+    <string name="title_info_about_developer">о разработчике</string>
+    <string name="title_profession">Профессия</string>
+    <string name="name_profession">Андроид разработчик</string>
+    <string name="developer_full_name">Попов Иван</string>
 
     <array name="name_city">
 
